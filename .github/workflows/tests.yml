@@ -19,7 +19,7 @@ jobs:
         php-versions: ['8.3']
     name: integration-tests (PHP ${{ matrix.php-versions }})
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
