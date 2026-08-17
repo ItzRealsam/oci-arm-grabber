@@ -55,7 +55,7 @@ jobs:
 
       - name: Run Grabber
         run: |
-          vendor/bin/phpunit --color tests/ --filter testCreateInstance || true
+          php index.php
         env:
           OCI_REGION: ${{ secrets.OCI_REGION }}
           OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
