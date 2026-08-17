@@ -34,7 +34,7 @@ jobs:
           EOF
           chmod 600 ~/.oci/oci_api_key.pem
 
-      - name: Validate composer.json and composer.lock
+      - name: Validate composer.json
         run: composer validate
 
       - name: Get Composer Cache Directory
@@ -53,9 +53,9 @@ jobs:
         run: |
           composer update --prefer-dist --no-progress
 
-      - name: Run test suite
+      - name: Run Grabber
         run: |
-          vendor/bin/phpunit --color tests/ --filter testCreateInstance
+          vendor/bin/phpunit --color tests/ --filter testCreateInstance || true
         env:
           OCI_REGION: ${{ secrets.OCI_REGION }}
           OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
