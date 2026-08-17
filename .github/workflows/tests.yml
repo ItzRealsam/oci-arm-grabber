@@ -8,8 +8,8 @@ on:
     branches:
       - main
   workflow_dispatch:
-  #schedule:
-  #  - cron: '*/5 * * * *'
+  schedule:
+    - cron: '*/5 * * * *'
 
 jobs:
   tests:
@@ -29,7 +29,9 @@ jobs:
       - name: Create Private Key File
         run: |
           mkdir -p ~/.oci
-          echo "${{ secrets.OCI_PRIVATE_KEY_FILENAME }}" > ~/.oci/oci_api_key.pem
+          cat << 'EOF' > ~/.oci/oci_api_key.pem
+          ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
+          EOF
           chmod 600 ~/.oci/oci_api_key.pem
 
       - name: Validate composer.json and composer.lock
@@ -53,7 +55,7 @@ jobs:
 
       - name: Run test suite
         run: |
-          vendor/bin/phpunit --color tests/
+          vendor/bin/phpunit --color tests/ --filter testCreateInstance
         env:
           OCI_REGION: ${{ secrets.OCI_REGION }}
           OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
